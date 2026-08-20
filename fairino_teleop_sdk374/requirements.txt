@@ -1,5 +1,0 @@
-# Fairino Cobot FR5 Python SDK 3.7.4 Teleoperation Package
-# Modul ini 100% menggunakan Standard Library Python (Python 3.7+)
-# Tidak membutuhkan pip install library eksternal tambahan.
-
-python>=3.7.4

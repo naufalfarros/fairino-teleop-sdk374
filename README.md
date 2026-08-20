@@ -1,8 +1,8 @@
-# 🤖 Fairino Cobot FR5 Physical Robot Teleoperation Package (SDK v3.7.4)
+# 🤖 Fairino Cobot FR5 — Multi-Platform Teleoperation Package (SDK v3.7.4)
 
-Repositori ini disusun secara mendalam dan portabel **khusus untuk mengontrol Robot Fisik Cobot Fairino FR5 / FR10** (bukan untuk lingkungan simulasi) menggunakan **Fairino Python SDK versi 3.7.4**.
+Repositori ini adalah paket **portabel dan cross-platform** untuk mengontrol **Robot Fisik Cobot Fairino FR5 / FR10** menggunakan **Fairino Python SDK versi 3.7.4**.
 
-Dengan paket ini, Anda dapat menghubungkan laptop (Ubuntu, macOS, Windows) ke controller box robot fisik, menjalankan teleoperasi manual (Jogging & Drag Teaching), serta membagikan kodenya ke laptop/device lain via GitHub.
+Script `interactive_teleop.py` dapat berjalan langsung di **Windows, Ubuntu/Linux, dan macOS** tanpa perlu mengubah kode apapun — cukup salin seluruh folder ini ke device tujuan dan jalankan.
 
 ---
 
@@ -12,6 +12,35 @@ Dengan paket ini, Anda dapat menghubungkan laptop (Ubuntu, macOS, Windows) ke co
 - **IP Default Controller (Kabel LAN Ethernet)**: `192.168.58.2` (Port XML-RPC: `20003`).
 - **IP Default Controller (Wi-Fi Hotspot AP)**: `192.168.57.2` (Port XML-RPC: `20003`).
 - **Komunikasi Jaringan**: Direct Ethernet Cable RJ45 atau Wi-Fi AP.
+
+---
+
+## ✅ Kompatibilitas Platform
+
+| Platform | Status | Versi Teruji |
+|----------|--------|-------------|
+| 🐧 Ubuntu / Linux | ✅ Didukung | Ubuntu 20.04, 22.04, 24.04 |
+| 🍏 macOS | ✅ Didukung | Ventura, Sonoma, Sequoia |
+| 🪟 Windows | ✅ Didukung | Windows 10, Windows 11 |
+
+**Prasyarat**: Python 3.8 atau lebih baru. **Tidak perlu `pip install` apapun** — semua dependensi menggunakan standard library Python bawaan.
+
+---
+
+## 📁 Struktur Berkas Repositori
+
+```text
+fairino python sdk 374/
+├── interactive_teleop.py                  # Script teleoperasi utama (cross-platform)
+├── README.md                              # Dokumentasi & panduan ini
+└── fairino-python-sdk-main/
+    ├── linux/fairino/
+    │   └── Robot.py                       # SDK Python v3.7.4 untuk Linux & macOS
+    └── windows/fairino/
+        └── Robot.py                       # SDK Python v3.7.4 untuk Windows
+```
+
+> **Catatan:** Script secara otomatis memilih SDK yang benar berdasarkan OS yang terdeteksi (`platform.system()`). Tidak perlu konfigurasi manual.
 
 ---
 
@@ -50,7 +79,7 @@ nmcli con up "Wired connection 1"
 ### 🍏 2. macOS (MACBOOK / MAC MINI / MAC STUDIO)
 
 #### 🔹 Cara GUI (macOS Ventura, Sonoma, Sequoia):
-1. Klik logo Apple **** di sudut kiri atas layar ➔ pilih **System Settings...** (Pengaturan Sistem).
+1. Klik logo Apple **** di sudut kiri atas layar ➔ pilih **System Settings...** (Pengaturan Sistem).
 2. Pilih menu **Network** (Jaringan) pada sidebar kiri.
 3. Klik pada adaptor jaringan Anda: **Ethernet** atau nama Adapter USB-C to Ethernet Anda (misal: *AX88179A* / *USB 10/100/1000 LAN*).
 4. Klik tombol **Details...** (Rincian).
@@ -108,55 +137,61 @@ ping 192.168.58.2
 
 ---
 
-## 📁 Struktur Berkas Repositori
+## 🚀 CARA MENJALANKAN PROGRAM TELEOPERASI
 
-```text
-fairino_teleop_sdk374/
-├── fairino/               # SDK Python 3.7.4 Lokal (Robot.py & RPC Client)
-│   ├── __init__.py
-│   └── Robot.py
-├── config.py              # Konfigurasi IP Robot Fisik (192.168.58.2) & Safety Limits
-├── teleop_cli.py          # Program Teleoperasi Terminal Interaktif (Keyboard Jog J1-J6)
-├── teleop_gui.py          # Program Teleoperasi GUI Desktop (Tkinter Panel)
-├── requirements.txt       # Kebutuhan Python (Pure Standard Library Python 3.7+)
-├── .gitignore             # Aturan ignoransi berkas cache/build untuk Git
-└── README.md              # Dokumentasi & panduan langkah demi langkah ini
+### Ubuntu / macOS:
+```bash
+cd "fairino python sdk 374"
+python3 interactive_teleop.py
 ```
+
+### Windows (Command Prompt / PowerShell):
+```cmd
+cd "fairino python sdk 374"
+python interactive_teleop.py
+```
+
+> **Catatan:** IP robot default di script adalah `192.168.57.2` (Wi-Fi AP). Jika menggunakan kabel LAN Ethernet, edit baris `Robot.RPC('192.168.57.2')` di `interactive_teleop.py` menjadi `Robot.RPC('192.168.58.2')`.
 
 ---
 
-## 🚀 CARA MENJALANKAN PROGRAM TELEOPERASI ROBOT FISIK
+## 🎮 Panduan Tombol Keyboard Teleoperasi
 
-### 1. Mode Terminal Interaktif (CLI)
+### Gerakan Manual Joint (JOG):
 
-```bash
-cd /home/fr5/fairino_teleop_sdk374
+| Tombol | Fungsi |
+|--------|--------|
+| `1` / `q` | J1 Positif (+) / J1 Negatif (-) |
+| `2` / `w` | J2 Positif (+) / J2 Negatif (-) |
+| `3` / `e` | J3 Positif (+) / J3 Negatif (-) |
+| `4` / `r` | J4 Positif (+) / J4 Negatif (-) |
+| `5` / `t` | J5 Positif (+) / J5 Negatif (-) |
+| `6` / `y` | J6 Positif (+) / J6 Negatif (-) |
 
-# Menjalankan teleoperasi ke IP default robot fisik via LAN Ethernet
-python3 teleop_cli.py 192.168.58.2
+### Pengaturan & Kontrol:
 
-# Atau via Wi-Fi AP Hotspot Robot Fisik
-python3 teleop_cli.py 192.168.57.2
-```
-
-**Panduan Navigasi Tombol Keyboard Teleop:**
-- `[1]` s/d `[6]` : Pilih Joint aktif (J1..J6) atau Sumbu Kartesian (X, Y, Z, Rx, Ry, Rz).
-- `[m]` : Switch Mode Jogging (**Joint Space** ↔ **Cartesian Space**).
-- `[u]` / `[+]` : Gerakkan Jogging arah **Positif (+)**.
-- `[i]` / `[-]` : Gerakkan Jogging arah **Negatif (-)**.
-- `[d]` : Toggle mode **Drag Teaching** *(Hand-Guiding: Robot fisik bebas ditarik/didorong)*.
-- `[e]` : Toggle Power Servo **Enable / Disable**.
-- `[r]` : Reset Error / Alarm Controller Robot Fisik.
-- `[,]` / `[.]` : Kurangi / Tambah Kecepatan Jog (-5% / +5%).
-- `[SPACE]` / `[s]` : Stop Seketika (*Instant Safety Stop*).
-- `[q]` : Keluar dari program teleoperasi.
+| Tombol | Fungsi |
+|--------|--------|
+| `m` | Ganti Mode JOG (Incremental ↔ Continuous) |
+| `a` | Mode Gerak Otomatis (Semua J1—J6 berputar bergantian) |
+| `[` / `]` | Kurangi / Tambah Step Size (-0.5° / +0.5°) |
+| `,` / `.` | Kurangi / Tambah Kecepatan (-5% / +5%) |
+| `c` | Reset / Clear Error & Alarm Controller |
+| `p` | Refresh Dashboard Manual |
+| `s` / `Spasi` | **STOP Seketika** (Instant Safety Stop) |
+| `Esc` | Keluar dari program |
 
 ---
 
-### 2. Mode Desktop GUI (Tkinter Panel)
+## 🔧 Perbedaan Teknis Cross-Platform
 
-```bash
-python3 teleop_gui.py
-```
+| Aspek | Linux / macOS | Windows |
+|-------|--------------|---------|
+| Keyboard Input | `termios` + `tty` + `select` | `msvcrt` |
+| Clear Screen | ANSI escape `\033[H\033[J` | `os.system('cls')` |
+| SDK Path | `fairino-python-sdk-main/linux/` | `fairino-python-sdk-main/windows/` |
+| Python Command | `python3` | `python` |
+
+Semua perbedaan ini ditangani **secara otomatis** oleh script — pengguna tidak perlu melakukan konfigurasi apapun.
 
 ---

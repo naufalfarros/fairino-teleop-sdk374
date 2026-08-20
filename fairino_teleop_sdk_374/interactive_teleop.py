@@ -19,9 +19,9 @@ else:
 # Prioritaskan path SDK v3.7.4 (relatif terhadap lokasi script ini)
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 if IS_WINDOWS:
-    sys.path.insert(0, os.path.join(_SCRIPT_DIR, "fairino-python-sdk-main", "windows"))
+    sys.path.insert(0, os.path.join(_SCRIPT_DIR, "fairino_python_sdk", "windows"))
 else:
-    sys.path.insert(0, os.path.join(_SCRIPT_DIR, "fairino-python-sdk-main", "linux"))
+    sys.path.insert(0, os.path.join(_SCRIPT_DIR, "fairino_python_sdk", "linux"))
 
 from fairino import Robot
 

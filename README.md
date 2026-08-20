@@ -30,10 +30,10 @@ Script `interactive_teleop.py` dapat berjalan langsung di **Windows, Ubuntu/Linu
 ## 📁 Struktur Berkas Repositori
 
 ```text
-fairino python sdk 374/
+fairino_teleop_sdk_374/
 ├── interactive_teleop.py                  # Script teleoperasi utama (cross-platform)
 ├── README.md                              # Dokumentasi & panduan ini
-└── fairino-python-sdk-main/
+└── fairino_python_sdk/
     ├── linux/fairino/
     │   └── Robot.py                       # SDK Python v3.7.4 untuk Linux & macOS
     └── windows/fairino/
@@ -141,13 +141,13 @@ ping 192.168.58.2
 
 ### Ubuntu / macOS:
 ```bash
-cd "fairino python sdk 374"
+cd fairino_teleop_sdk_374
 python3 interactive_teleop.py
 ```
 
 ### Windows (Command Prompt / PowerShell):
 ```cmd
-cd "fairino python sdk 374"
+cd fairino_teleop_sdk_374
 python interactive_teleop.py
 ```
 
@@ -189,7 +189,7 @@ python interactive_teleop.py
 |-------|--------------|---------|
 | Keyboard Input | `termios` + `tty` + `select` | `msvcrt` |
 | Clear Screen | ANSI escape `\033[H\033[J` | `os.system('cls')` |
-| SDK Path | `fairino-python-sdk-main/linux/` | `fairino-python-sdk-main/windows/` |
+| SDK Path | `fairino_python_sdk/linux/` | `fairino_python_sdk/windows/` |
 | Python Command | `python3` | `python` |
 
 Semua perbedaan ini ditangani **secara otomatis** oleh script — pengguna tidak perlu melakukan konfigurasi apapun.
